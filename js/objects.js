@@ -63,8 +63,8 @@ tasks: {
             },
             standingRight: new Objects.tasks.Image(img,1056,208,16,16),
             standingLeft: new Objects.tasks.Image(img,1056,224,16,16),
-            /*jumpingRight: new Objects.tasks.Image(img,1024,208,16,16),
-            jumpingLeft: new Objects.tasks.Image(img,1024,224,16,16)*/
+            jumpingRight: new Objects.tasks.Image(img,1024,208,16,16),
+            jumpingLeft: new Objects.tasks.Image(img,1024,224,16,16)
         };
         this.state = {
             standing: {
