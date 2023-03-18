@@ -25,6 +25,7 @@ var Engine = {
       canvas: canvas,
       graphic: graphic
     };
+    Input.ini(data);
     Objects.ini(data);
     Engine.start(data);
   },
@@ -44,10 +45,12 @@ var Engine = {
   },
 
   input: function(data) {
+    Input.update(data);
 
   },
 
   update: function(data) {
+    Movement.update(data);
     Animations.update(data);
     Physics.update(data)
 

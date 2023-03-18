@@ -1,16 +1,17 @@
 var Physics = {
     update: function(data) {
     Physics.tasks.Gravity(data.objects.mario);
-    Physics.tasks.CollisionDetection(data);
+    Physics.tasks.DetectCollision(data);
     },
     
     tasks: {
         Gravity: function(object) {
+            object.currentState = object.state.jumping;
             object.velocityY += 1;
             object.y += object.velocityY;
         },
         
-        CollisionDetection: function(data) {
+        DetectCollision: function(data) {
             var mario = data.objects.mario;
             
             var DetectCollision = function(object) {
@@ -28,12 +29,14 @@ var Physics = {
         Collision: function(data, object) {
             var mario = data.objects.mario;
             
-            if(object.type === "wall") {
+            if(object.typ === "wall") {
                 if(mario.y + mario.h > object.y && mario.x + mario.w > object.x + 10 &&
-                   mario.x < object.x + object.width - 10 && mario.velocityY >= 0) {
+                   mario.x < object.x + object.w - 10 && mario.velocityY >= 0) {
+                   mario.currentState = mario.state.standing;
                     mario.y = object.y - mario.h;
                     mario.velocityY = 0;
                 }
+            
             }
         }
     }
