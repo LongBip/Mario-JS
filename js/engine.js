@@ -21,7 +21,7 @@ var Engine = {
     });
 
     var data = {
-      frameNumber: 0,
+      frameNumber:0,
       canvas: canvas,
       graphic: graphic
     };
@@ -49,6 +49,7 @@ var Engine = {
 
   update: function(data) {
     Animations.update(data);
+    Physics.update(data)
 
   },
 

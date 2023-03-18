@@ -2,7 +2,10 @@ var Render = {
 update: function(data) {
 Render.tasks.Draw(data.objects.sky, data.canvas.skyCtx);
 
-Render.tasks.Draw(data.objects.map, data.canvas.bgCtx);
+    data.canvas.bgCtx.clearRect(0, 0, data.canvas.bgCanvas.width, data.canvas.bgCanvas.height);
+	Render.tasks.Draw(data.objects.map, data.canvas.bgCtx);
+	data.canvas.fgCtx.clearRect(0, 0, data.canvas.fgCanvas.width, data.canvas.fgCanvas.height);
+	Render.tasks.Draw(data.objects.mario, data.canvas.fgCtx);
 },
 tasks: {
 	Draw: function(co, where) {
