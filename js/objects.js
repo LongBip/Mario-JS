@@ -43,18 +43,18 @@ tasks: {
         this.h = h;
     },
    Mario: function(img, x, y, w, h) {
-        var self = this;
-        
+        var interior = this;
+        console.log(interior);
         this.image = new Objects.tasks.Image(img, 1056, 208, 16, 16);
         this.animation = {
-            movingRight: {
+            movementRight: {
                 frame: [new Objects.tasks.Image(img,976,208,16,16),
                 new Objects.tasks.Image(img,960,208,16,16),
                 new Objects.tasks.Image(img,976,208,16,16),
                 new Objects.tasks.Image(img,992,208,16,16)],
                 currentFrame: 0
             },
-            movingLeft: {
+            movementLeft: {
                 frame: [new Objects.tasks.Image(img,976,224,16,16),
                 new Objects.tasks.Image(img,960,224,16,16),
                 new Objects.tasks.Image(img,976,224,16,16),
@@ -63,86 +63,84 @@ tasks: {
             },
             standingRight: new Objects.tasks.Image(img,1056,208,16,16),
             standingLeft: new Objects.tasks.Image(img,1056,224,16,16),
-            jumpingRight: new Objects.tasks.Image(img,1024,208,16,16),
-            jumpingLeft: new Objects.tasks.Image(img,1024,224,16,16)
+            jumpRight: new Objects.tasks.Image(img,1024,208,16,16),
+            jumpLeft: new Objects.tasks.Image(img,1024,224,16,16)
         };
         this.state = {
-            standing: {
-                move: function(data) {
-                        if(self.velocityY == 0) {
-                            self.velocityY -= 23;
-                        }
-                    
-                },
-                animation: function(data) {
-                    if(self.direction==="right") {
-                        self.image = self.animation.standingRight;
-                    } else {
-                        self.image = self.animation.standingLeft;
-                    }
-                }
-            },
             jumping: {
                 move: function(data) {
+                        if(interior.velocityY == 0) {
+                            interior.velocityY -= 23;
+                        }
                     
-                     { 
-                  if (self.direction === "right") {
-                    if (self.x < data.canvas.fgCanvas.width/2 || data.objects.map.x <= data.canvas.fgCanvas.width - data.objects.map.width) {
-                      self.x += self.velocityX;
-                    } else {
-                      data.objects.map.x -= self.velocityX;
-                      for (var i = 0; i < data.objects.wallTable.length; i++) {
-                        data.objects.wallTable[i].x -= self.velocityX;
-                      }
-                    }
-                  } else {
-                    if (self.x > data.canvas.fgCanvas.width/2 || data.objects.map.x >= 0) {
-                      self.x -= self.velocityX;
-                    } else {
-                      data.objects.map.x += self.velocityX;
-                      for (var i = 0; i < data.objects.wallTable.length; i++) {
-                        data.objects.wallTable[i].x += self.velocityX;
-                      }
-                    }
-                  }
-                }
                 },
                 animation: function(data) {
-                    if(self.direction==="right") {
-                        self.image = self.animation.jumpingRight;
+                    if(interior.direction==="right") {
+                        interior.image = interior.animation.jumpRight;
                     } else {
-                        self.image = self.animation.jumpingLeft;
+                        interior.image = interior.animation.jumpLeft;
                     }
                 }
             },
-            moving: {
+            standing: {
                 move: function(data) {
-                   
+                    
+                     return;
                 },
                 animation: function(data) {
-                    if(self.direction === "right") {
-                        if(data.frameNumber % 5 == 0) {
-                            self.image = self.animation.movingRight.frame[self.animation.movingRight.currentFrame];
-                            self.animation.movingRight.currentFrame++;
-                        }
-                        
-                        if(self.animation.movingRight.currentFrame>3) {
-                            self.animation.movingRight.currentFrame=0;
-                        }
+                    if(interior.direction==="right") {
+                        interior.image = interior.animation.standingRight;
                     } else {
-                        if(data.frameNumber % 5 == 0) {
-                            self.image = self.animation.movingLeft.frame[self.animation.movingLeft.currentFrame];
-                            self.animation.movingLeft.currentFrame++;
-                        }
-                        
-                        if(self.animation.movingLeft.currentFrame>3) {
-                            self.animation.movingLeft.currentFrame=0;
-                        }
+                        interior.image = interior.animation.standingLeft;
                     }
                 }
+            },
+            movement: {
+                move: function(data){if(interior.direction === "right") {
+                            if(interior.x<data.canvas.fgCanvas.width/2 || data.objects.map.x<=data.canvas.fgCanvas.width-data.objects.map.w){
+                                interior.x+=interior.velocityX;
+                            } else {
+                                data.objects.map.x -= interior.velocityX;
+                                for(var i = 0; i<data.objects.wallTable.length; i++) {
+                                    data.objects.wallTable[i].x -= interior.velocityX;
+                                }
+                            }
+                        } else {
+                            if(interior.x>data.canvas.fgCanvas.width/2 || data.objects.map.x>=0){
+                                interior.x-=interior.velocityX;
+                            } else {
+                                data.objects.map.x += interior.velocityX;
+                                for(var i = 0; i<data.objects.wallTable.length; i++)
+                                { data.objects.wallTable[i].x += interior.velocityX;
+                                }
+                            }
+                        }
+                    },
+                        animation: function(dane) {
+                        if(interior.direction === "right") {
+                            if(dane.frameNumber % 5 === 0) {
+                                interior.image = interior.animation.movementRight.frame[interior.animation.movementRight.currentFrame];
+                                interior.animation.movementRight.currentFrame++;
+                                
+                                if(interior.animation.movementRight.currentFrame > 3) {
+                                    interior.animation.movementRight.currentFrame = 0;
+                                }                               
+                            }
+                        } else if(interior.direction === "left") {
+                            if(dane.frameNumber % 5 === 0) {
+                                interior.image = interior.animation.movementLeft.frame[interior.animation.movementLeft.currentFrame];
+                                interior.animation.movementLeft.currentFrame++;
+                                
+                                if(interior.animation.movementLeft.currentFrame > 3) {
+                                    interior.animation.movementLeft.currentFrame = 0;
+                                }                               
+                            }
+                        }
+                 }
+                
             }
         };
-        this.currentState = self.state.standing;
+        this.currentState = interior.state.standing;
         this.direction = "right";
         this.x =x;
         this.y = y;

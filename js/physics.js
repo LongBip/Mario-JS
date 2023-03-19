@@ -7,7 +7,7 @@ var Physics = {
     tasks: {
         Gravity: function(object) {
             object.currentState = object.state.jumping;
-            object.velocityY += 1;
+            object.velocityY += 1.2;
             object.y += object.velocityY;
         },
         

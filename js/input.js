@@ -16,7 +16,7 @@ var Input = {
 			mario.direction = "right";
 			
 			if(mario.velocityY == 0) {
-				mario.currentState = mario.state.moving;
+				mario.currentState = mario.state.movement;
 			} else {
 				if(mario.x < data.canvas.fgCanvas.width/2 || data.objects.map.x <= data.canvas.fgCanvas.width-data.objects.map.w) {
 					mario.x += mario.velocityX;
@@ -32,7 +32,7 @@ var Input = {
 			mario.direction = "left";
 			
 			if(mario.velocityY == 0) {
-				mario.currentState = mario.state.moving;
+				mario.currentState = mario.state.movement;
 			} else {
 				if(mario.x > data.canvas.fgCanvas.width/2 || data.objects.map.x >= 0) {
 					mario.x -= mario.velocityX;
@@ -44,9 +44,9 @@ var Input = {
 				}
 			}
 		}
-		/*if(Input.tasks.isPressed(32)) {
+		if(Input.tasks.isPressed(32)) {
 			mario.currentState = mario.state.jumping;
-		}*/
+		}
 	},
 	
 	tasks: {
